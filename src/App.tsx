@@ -1,11 +1,19 @@
 import './sass/app.sass';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+// Route Pages
+import SignUp from './Pages/signup';
 
 // TODO: Browser Router and Routes
 
 function App() {
 	return (
 		<>
-			<h1>Setup</h1>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<SignUp />} />
+				</Routes>
+			</BrowserRouter>
 		</>
 	);
 }
