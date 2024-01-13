@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((request) => {
-	const token = Cookies.get('jwt');
+	const token = Cookies.get('token');
 
 	if (token) {
 		request.headers['Authorization'] = `Bearer ${token}`;
