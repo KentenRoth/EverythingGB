@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import instance from '../axios/axios';
 
 // TODO:
-// 1. Add ingredients set two - This is for if there is a Brine, or a Sauce, or something outside of the main dish
-// 2. Add more ingredients to set two
-// 3. Style form
+// 1. Remove ingredient row.
+// 2. Add ingredients set two - This is for if there is a Brine, or a Sauce, or something outside of the main dish
+// 3. Add more ingredients to set two
+// 4. Style form - Mostly Finished
 
 interface Recipe {
 	title: string;
 	description: string;
 	ingredients: string[];
+	ingredientsSetTwo?: string[];
 	instructions: string;
 	category: string[];
 	notes: string;
@@ -24,8 +26,9 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		title: '',
 		description: '',
 		ingredients: [''],
+		IngredientsSetTwo: [''],
 		instructions: '',
-		category: [''],
+		category: '',
 		notes: '',
 	});
 
@@ -73,14 +76,33 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 
 	return (
 		<>
-			<div className="recipe_form_container">
-				<form onSubmit={handleSubmit}>
+			<form className="recipe_form" onSubmit={handleSubmit}>
+				<div className="recipe_form__main">
 					<input
 						type="text"
-						placeholder="title"
+						placeholder="Title"
 						name="title"
 						onChange={handleChange}
 					/>
+					<textarea
+						placeholder="Instructions"
+						name="instructions"
+						onChange={handleChange}
+					/>
+					<textarea
+						placeholder="Notes"
+						name="notes"
+						onChange={handleChange}
+					/>
+					<input
+						type="text"
+						placeholder="Categories seperated by commas"
+						name="category"
+						onChange={handleChange}
+					/>
+					<button type="submit">Save</button>
+				</div>
+				<div className="recipe_form__ingredients">
 					{recipe.ingredients.map((ingredient, index) => (
 						<>
 							<input
@@ -98,25 +120,8 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 					<button type="button" onClick={addMoreIngredients}>
 						Add More Ingredients
 					</button>
-					<input
-						type="text"
-						placeholder="instructions"
-						name="instructions"
-						onChange={handleChange}
-					/>
-					<textarea
-						placeholder="Categories seperated by commas"
-						name="category"
-						onChange={handleChange}
-					></textarea>
-					<textarea
-						placeholder="notes"
-						name="notes"
-						onChange={handleChange}
-					/>
-					<button type="submit">Submit</button>
-				</form>
-			</div>
+				</div>
+			</form>
 		</>
 	);
 };
