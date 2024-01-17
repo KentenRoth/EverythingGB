@@ -20,19 +20,21 @@ const Login = () => {
 	};
 
 	return (
-		<div>
-			<h1>Login</h1>
-			<input
-				type="text"
-				placeholder="email"
-				onChange={(e) => setEmail(e.target.value)}
-			/>
-			<input
-				type="password"
-				placeholder="password"
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<button onClick={login}>Login</button>
+		<div className="login">
+			<div className="login_container">
+				<h1>Login</h1>
+				<input
+					type="text"
+					placeholder="Email"
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+				<input
+					type="password"
+					placeholder="Password"
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button onClick={login}>Login</button>
+			</div>
 		</div>
 	);
 };

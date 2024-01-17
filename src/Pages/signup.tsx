@@ -21,24 +21,26 @@ const SignUp = () => {
 	};
 
 	return (
-		<div>
-			<h1>Sign Up</h1>
-			<input
-				type="text"
-				placeholder="name"
-				onChange={(e) => setUsername(e.target.value)}
-			/>
-			<input
-				type="text"
-				placeholder="email"
-				onChange={(e) => setEmail(e.target.value)}
-			/>
-			<input
-				type="password"
-				placeholder="password"
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<button onClick={signUp}>Sign Up</button>
+		<div className="signup">
+			<div className="signup_container">
+				<h1>Sign Up</h1>
+				<input
+					type="text"
+					placeholder="Name"
+					onChange={(e) => setUsername(e.target.value)}
+				/>
+				<input
+					type="text"
+					placeholder="Email"
+					onChange={(e) => setEmail(e.target.value)}
+				/>
+				<input
+					type="password"
+					placeholder="Password"
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button onClick={signUp}>Sign Up</button>
+			</div>
 		</div>
 	);
 };
