@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Tabs from '../Components/tabs';
 import Create from './create';
-import Receipes from '../Components/recipes';
+import Recipes from '../Components/recipes';
 
 const Main = () => {
 	const [tabs, setTabs] = useState([
 		{
-			title: 'Receipes',
+			title: 'Recipes',
 			isActive: true,
 			isPrivate: false,
 			id: 'recipe',
@@ -51,7 +51,7 @@ const Main = () => {
 	return (
 		<>
 			<Tabs tabs={tabs} handleTabClick={handleTabClick} />
-			<Create />
+			<Recipes />
 		</>
 	);
 };
