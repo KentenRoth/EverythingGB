@@ -1,12 +1,58 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import Tabs from '../Components/tabs';
+import Create from './create';
+import Receipes from '../Components/recipes';
 
 const Main = () => {
+	const [tabs, setTabs] = useState([
+		{
+			title: 'Receipes',
+			isActive: true,
+			isPrivate: false,
+			id: 'recipe',
+		},
+		{
+			title: 'Bookmarks',
+			isActive: false,
+			isPrivate: false,
+			id: 'bookmark',
+		},
+		{
+			title: 'Settings',
+			isActive: false,
+			isPrivate: false,
+			id: 'settings',
+		},
+		{
+			title: 'Admin',
+			isActive: false,
+			isPrivate: true,
+			id: 'admin',
+		},
+		{
+			title: 'Create',
+			isActive: false,
+			isPrivate: true,
+			id: 'create',
+		},
+	]);
+
+	let handleTabClick = (id: string) => {
+		let newTabs = tabs.map((tab) => {
+			if (tab.id === id) {
+				return { ...tab, isActive: true };
+			} else {
+				return { ...tab, isActive: false };
+			}
+		});
+		setTabs(newTabs);
+	};
+
 	return (
-		<div>
-			<h1>Home</h1>
-			<Link to="/create"> Create Recipe </Link>
-		</div>
+		<>
+			<Tabs tabs={tabs} handleTabClick={handleTabClick} />
+			<Create />
+		</>
 	);
 };
 
