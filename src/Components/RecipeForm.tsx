@@ -7,6 +7,7 @@ import instance from '../axios/axios';
 // 2. Add ingredients set two - This is for if there is a Brine, or a Sauce, or something outside of the main dish
 // 3. Add more ingredients to set two
 // 4. Style form - Mostly Finished
+// 5. Maybe make instructions a wysiwyg
 
 interface Recipe {
 	title: string;
