@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import instance from '../axios/axios';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 	const [name, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const navigate = useNavigate();
 
 	const signUp = async () => {
 		try {
@@ -15,6 +17,9 @@ const SignUp = () => {
 				password: password,
 			});
 			Cookies.set('token', response.data.token);
+			if (response.status === 201) {
+				navigate('/');
+			}
 		} catch (error) {
 			console.error(error);
 		}
