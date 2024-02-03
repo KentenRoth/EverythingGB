@@ -48,10 +48,21 @@ const Main = () => {
 		setTabs(newTabs);
 	};
 
+	const activeTab = tabs.find((tab) => tab.isActive);
+
+	let activeTabContent = () => {
+		switch (activeTab?.id) {
+			case 'create':
+				return <Create />;
+			default:
+				return <Recipes />;
+		}
+	};
+
 	return (
 		<>
 			<Tabs tabs={tabs} handleTabClick={handleTabClick} />
-			<Recipes />
+			{activeTabContent()}
 		</>
 	);
 };
