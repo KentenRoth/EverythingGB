@@ -5,12 +5,15 @@ interface RecipeCardProps {
 	recipe: Recipe;
 	show: (id: string) => void;
 	onBookmarkClick: (event: React.MouseEvent, id: string) => void;
+	bookmark: boolean;
 }
 
 const RecipeCard = (props: RecipeCardProps) => {
 	const { show, onBookmarkClick } = props;
-	const fill = '#2c2c2c';
-
+	let fill = '#2c2c2c';
+	if (props.bookmark) {
+		fill = '#212cff';
+	}
 	return (
 		<>
 			<a className="recipe_card" onClick={() => show(props.recipe._id)}>

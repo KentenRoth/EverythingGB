@@ -7,6 +7,7 @@ import RecipeCard from './recipeCard';
 
 const Recipes = () => {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
+	const [bookmarks, setBookmarks] = useState<string[]>(['']);
 	const [shownRecipe, setShownRecipe] = useState<Recipe>({
 		_id: '',
 		title: '',
@@ -15,7 +16,7 @@ const Recipes = () => {
 		category: '',
 		notes: '',
 		ingredientsSetTwo: [''],
-		user: { id: '', name: '', role: '' },
+		user: { id: '', name: '', role: '', bookmarks: [''] },
 	});
 
 	useEffect(() => {
@@ -29,6 +30,15 @@ const Recipes = () => {
 			}
 		};
 
+		let getBookmarks = async () => {
+			try {
+				const response = await instance.get('/users/me');
+				setBookmarks(response.data.bookmarks);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		getBookmarks();
 		getRecipes();
 	}, []);
 
@@ -40,6 +50,25 @@ const Recipes = () => {
 
 	let handleBookmarkClick = (event: React.MouseEvent, id: string) => {
 		event.stopPropagation();
+		let newBookmarks: string[] = [''];
+		if (bookmarks.includes(id)) {
+			console.log('Removing bookmark');
+			newBookmarks = bookmarks.filter((bookmark) => bookmark !== id);
+		} else {
+			newBookmarks = [...bookmarks, id];
+		}
+		setBookmarks(newBookmarks);
+		updateBooksmarks(newBookmarks);
+	};
+
+	let updateBooksmarks = async (newBookmarks: string[]) => {
+		try {
+			await instance.patch('/users/me', {
+				bookmarks: newBookmarks,
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -51,6 +80,7 @@ const Recipes = () => {
 							recipe={recipe}
 							show={handleRecipeClick}
 							onBookmarkClick={handleBookmarkClick}
+							bookmark={bookmarks.includes(recipe._id)}
 							key={recipe._id}
 						/>
 					))}

@@ -11,6 +11,7 @@ export interface Recipe {
 
 export interface User {
 	id: string;
+	bookmarks: string[];
 	name: string;
 	role: string;
 }
