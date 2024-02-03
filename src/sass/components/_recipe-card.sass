@@ -7,6 +7,7 @@
     padding: 20px
     cursor: pointer
     transition: 300ms ease-in-out
+    position: relative
     &:hover
         transition: 300ms ease-in-out
         box-shadow: 0px 0px 10px 2px $box-shadow-blue
@@ -16,4 +17,11 @@
     &__user
         font-size: 16px
         margin-top: 10px
+    .bookmark-icon
+        z-index: 4
+        position: absolute
+        right: 20px
+        top: 50%
+        transform: translateY(-50%)
+        cursor: pointer
         

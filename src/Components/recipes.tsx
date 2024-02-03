@@ -24,7 +24,6 @@ const Recipes = () => {
 				const response = await instance.get('/recipes');
 				setRecipes(response.data.data);
 				setShownRecipe(response.data.data[0]);
-				console.log(response.data.data);
 			} catch (error) {
 				console.log(error);
 			}
@@ -34,8 +33,13 @@ const Recipes = () => {
 	}, []);
 
 	let handleRecipeClick = (id: string) => {
+		console.log('Recipe clicked');
 		let newRecipe = recipes.find((recipe) => recipe._id === id);
 		setShownRecipe(newRecipe!);
+	};
+
+	let handleBookmarkClick = (event: React.MouseEvent, id: string) => {
+		event.stopPropagation();
 	};
 
 	return (
@@ -46,6 +50,7 @@ const Recipes = () => {
 						<RecipeCard
 							recipe={recipe}
 							show={handleRecipeClick}
+							onBookmarkClick={handleBookmarkClick}
 							key={recipe._id}
 						/>
 					))}

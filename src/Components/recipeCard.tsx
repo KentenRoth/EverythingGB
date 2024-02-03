@@ -1,17 +1,29 @@
 import { Recipe } from '../types';
+import BookmarkIcon from './bookmarkIcon';
 
 interface RecipeCardProps {
 	recipe: Recipe;
 	show: (id: string) => void;
+	onBookmarkClick: (event: React.MouseEvent, id: string) => void;
 }
 
 const RecipeCard = (props: RecipeCardProps) => {
-	const { show } = props;
+	const { show, onBookmarkClick } = props;
+	const fill = '#2c2c2c';
+
 	return (
 		<>
 			<a className="recipe_card" onClick={() => show(props.recipe._id)}>
 				<p className="recipe_card__title">{props.recipe.title}</p>
 				<p className="recipe_card__user">{props.recipe.user.name}</p>
+				<div
+					className="bookmark-icon"
+					onClick={(event) =>
+						onBookmarkClick(event, props.recipe._id)
+					}
+				>
+					<BookmarkIcon fill={fill} />
+				</div>
 			</a>
 		</>
 	);
