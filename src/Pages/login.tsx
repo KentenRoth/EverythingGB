@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [rememberMe, setRememberMe] = useState(false);
 	const navigate = useNavigate();
 
 	const login = async (e: React.FormEvent) => {
@@ -15,7 +16,10 @@ const Login = () => {
 				email: email,
 				password: password,
 			});
-			Cookies.set('token', response.data.authToken);
+
+			const cookieOptions = rememberMe ? {} : { expires: 2 };
+			Cookies.set('token', response.data.authToken, cookieOptions);
+
 			if (response.status === 200) {
 				navigate('/');
 			}
@@ -40,6 +44,17 @@ const Login = () => {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button onClick={login}>Login</button>
+					<div className="checkbox">
+						<input
+							type="checkbox"
+							id="remember"
+							checked={rememberMe}
+							onChange={(e) => setRememberMe(e.target.checked)}
+						/>{' '}
+						<label className="checkbox-label" htmlFor="remember">
+							Remember me?
+						</label>
+					</div>
 				</form>
 			</div>
 		</div>
