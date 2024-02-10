@@ -216,7 +216,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 									type="button"
 									onClick={addIngredientsSetTwo}
 								>
-									Remove Ingredient Set Two
+									Remove Ingredient Set
 								</button>
 							</div>
 						</div>
