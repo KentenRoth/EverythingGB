@@ -46,7 +46,6 @@ const Recipes = (props: Props) => {
 		let getBookmarks = async () => {
 			try {
 				const response = await instance.get('/users/me/bookmarks');
-				console.log(response.data);
 				setRecipes(response.data);
 				setShownRecipe(response.data[0]);
 			} catch (error) {
