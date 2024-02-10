@@ -5,9 +5,13 @@ import ShownRecipe from './shownRecipe';
 import { Recipe } from '../types';
 import RecipeCard from './recipeCard';
 
-const Recipes = () => {
+interface Props {
+	show?: string;
+}
+
+const Recipes = (props: Props) => {
 	const [recipes, setRecipes] = useState<Recipe[]>([]);
-	const [bookmarks, setBookmarks] = useState<string[]>(['']);
+	const [bookmarksIds, setBookmarksIds] = useState<string[]>(['']);
 	const [shownRecipe, setShownRecipe] = useState<Recipe>({
 		_id: '',
 		title: '',
@@ -30,17 +34,33 @@ const Recipes = () => {
 			}
 		};
 
-		let getBookmarks = async () => {
+		let getBookmarksIds = async () => {
 			try {
 				const response = await instance.get('/users/me');
-				setBookmarks(response.data.bookmarks);
+				setBookmarksIds(response.data.bookmarks);
 			} catch (error) {
 				console.log(error);
 			}
 		};
-		getBookmarks();
-		getRecipes();
-	}, []);
+
+		let getBookmarks = async () => {
+			try {
+				const response = await instance.get('/users/me/bookmarks');
+				console.log(response.data);
+				setRecipes(response.data);
+				setShownRecipe(response.data[0]);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		if (props.show === 'bookmarks') {
+			getBookmarks();
+		} else {
+			getRecipes();
+		}
+		getBookmarksIds();
+	}, [props.show]);
 
 	let handleRecipeClick = (id: string) => {
 		console.log('Recipe clicked');
@@ -51,13 +71,13 @@ const Recipes = () => {
 	let handleBookmarkClick = (event: React.MouseEvent, id: string) => {
 		event.stopPropagation();
 		let newBookmarks: string[] = [''];
-		if (bookmarks.includes(id)) {
+		if (bookmarksIds.includes(id)) {
 			console.log('Removing bookmark');
-			newBookmarks = bookmarks.filter((bookmark) => bookmark !== id);
+			newBookmarks = bookmarksIds.filter((bookmark) => bookmark !== id);
 		} else {
-			newBookmarks = [...bookmarks, id];
+			newBookmarks = [...bookmarksIds, id];
 		}
-		setBookmarks(newBookmarks);
+		setBookmarksIds(newBookmarks);
 		updateBooksmarks(newBookmarks);
 	};
 
@@ -80,7 +100,7 @@ const Recipes = () => {
 							recipe={recipe}
 							show={handleRecipeClick}
 							onBookmarkClick={handleBookmarkClick}
-							bookmark={bookmarks.includes(recipe._id)}
+							bookmark={bookmarksIds.includes(recipe._id)}
 							key={recipe._id}
 						/>
 					))}

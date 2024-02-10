@@ -54,6 +54,8 @@ const Main = () => {
 		switch (activeTab?.id) {
 			case 'create':
 				return <Create />;
+			case 'bookmark':
+				return <Recipes show={'bookmarks'} />;
 			default:
 				return <Recipes />;
 		}
