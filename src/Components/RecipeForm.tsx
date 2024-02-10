@@ -26,11 +26,12 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		title: '',
 		description: '',
 		ingredients: [''],
-		IngredientsSetTwo: [''],
+		ingredientsSetTwo: [''],
 		instructions: '',
 		category: '',
 		notes: '',
 	});
+	let [hasIngredientsSetTwo, setHasIngredientsSetTwo] = useState(false);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -66,7 +67,25 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		}));
 	};
 
-	const addIngredientsSetTwo = () => {};
+	const removeIngredient = (index: number) => {
+		const newIngredients = [...recipe.ingredients];
+		newIngredients.splice(index, 1);
+		setRecipe({ ...recipe, ingredients: newIngredients });
+	};
+
+	const addIngredientsSetTwo = () => {
+		setRecipe((prevRecipe) => ({
+			...prevRecipe,
+			ingredientsSetTwo: [''],
+		}));
+		if (hasIngredientsSetTwo === true) {
+			setRecipe((prevRecipe) => ({
+				...prevRecipe,
+				ingredientsSetTwo: [''],
+			}));
+		}
+		setHasIngredientsSetTwo(!hasIngredientsSetTwo);
+	};
 
 	const handleIngredientChangeSetTwo = (
 		e: React.ChangeEvent<HTMLInputElement>
@@ -104,22 +123,76 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 				</div>
 				<div className="recipe_form__ingredients">
 					{recipe.ingredients.map((ingredient, index) => (
-						<>
-							<input
-								key={index}
-								type="text"
-								placeholder={`Ingredient ${index + 1}`}
-								name={`ingredient${index}`}
-								value={ingredient || ''}
-								onChange={(event) =>
-									handleIngredientChange(index, event)
-								}
-							/>
-						</>
+						<React.Fragment key={index}>
+							<div className="ingredient_wrapper">
+								<input
+									type="text"
+									placeholder={`Ingredient ${index + 1}`}
+									name={`ingredient${index}`}
+									value={ingredient || ''}
+									onChange={(event) =>
+										handleIngredientChange(index, event)
+									}
+								/>{' '}
+								<button
+									className="ingredients_delete"
+									onClick={() => removeIngredient(index)}
+								>
+									{' '}
+									-{' '}
+								</button>
+							</div>
+						</React.Fragment>
 					))}
-					<button type="button" onClick={addMoreIngredients}>
-						Add More Ingredients
-					</button>
+					<div className="button_wrapper">
+						<button type="button" onClick={addMoreIngredients}>
+							Add More Ingredients
+						</button>
+						{!hasIngredientsSetTwo && (
+							<button
+								type="button"
+								onClick={addIngredientsSetTwo}
+							>
+								Add Second Ingredient Set
+							</button>
+						)}
+					</div>
+					{hasIngredientsSetTwo && (
+						<div className="recipe_form__ingredients-two">
+							<h3>Ingredient Set Two</h3>
+							{recipe.ingredientsSetTwo?.map(
+								(ingredient, index) => (
+									<React.Fragment key={index}>
+										<input
+											type="text"
+											placeholder={`Ingredient ${
+												index + 1
+											}`}
+											name={`ingredient${index}`}
+											value={ingredient || ''}
+											onChange={
+												handleIngredientChangeSetTwo
+											}
+										/>
+									</React.Fragment>
+								)
+							)}
+							<div className="button_wrapper">
+								<button
+									type="button"
+									onClick={addMoreIngredientsSetTwo}
+								>
+									Add More Ingredients
+								</button>
+								<button
+									type="button"
+									onClick={addIngredientsSetTwo}
+								>
+									Remove Ingredient Set Two
+								</button>
+							</div>
+						</div>
+					)}
 				</div>
 			</form>
 		</>
