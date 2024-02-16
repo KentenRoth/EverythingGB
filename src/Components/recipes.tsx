@@ -4,6 +4,7 @@ import ShownRecipe from './shownRecipe';
 
 import { Recipe } from '../types';
 import RecipeCard from './recipeCard';
+import Search from './serach';
 
 interface Props {
 	show?: string;
@@ -80,6 +81,24 @@ const Recipes = (props: Props) => {
 		updateBooksmarks(newBookmarks);
 	};
 
+	let handleSearch = async (value: string) => {
+		let url = '/recipes/search?q=';
+		if (props.show === 'bookmarks') {
+			url = '/users/me/bookmarks?q=';
+		}
+
+		try {
+			const response = await instance.get(`${url}${value}`);
+			let data = response.data.data;
+			if (props.show === 'bookmarks') {
+				data = response.data;
+			}
+			setRecipes(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	let updateBooksmarks = async (newBookmarks: string[]) => {
 		try {
 			await instance.patch('/users/me', {
@@ -94,6 +113,9 @@ const Recipes = (props: Props) => {
 		<>
 			<div className="recipes_wrapper">
 				<div className="recipes">
+					<div className="search_wrapper">
+						<Search search={handleSearch} />
+					</div>
 					{recipes.map((recipe) => (
 						<RecipeCard
 							recipe={recipe}
