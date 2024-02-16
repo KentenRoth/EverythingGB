@@ -198,8 +198,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 													)
 												}
 											>
-												{' '}
-												-{' '}
+												-
 											</button>
 										</div>
 									</React.Fragment>
