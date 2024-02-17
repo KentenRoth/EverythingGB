@@ -1,0 +1,39 @@
+.editorBox
+    border: solid 1px $accent-blue
+    &__controls
+        display: flex
+        gap: 15px
+        flex-wrap: wrap
+        padding: 10px
+        padding-bottom: 15px
+        .control-group
+            display: flex
+            justify-content: space-between
+            flex-grow: 1
+            button
+                margin-top: 0
+                background: $dark-gray-hover
+                box-shadow: unset
+                &:hover
+                    transition: 300ms ease-in-out
+                    background: $accent-blue
+            .is-active
+                background: $accent-blue
+        .control-group--long
+            flex-basis: 100%
+            justify-content: flex-start
+            select
+                color: $light-gray
+                background: $dark-gray
+                border: solid 1px $accent-blue
+                padding: 5px 15px
+                font-size: 15px
+    &__editor
+        min-height: 200px
+        border-top: solid 1px $accent-blue
+        background: $dark-gray
+        color: $light-gray
+        div
+            min-height: 200px
+            .tiptap
+                height: 100%

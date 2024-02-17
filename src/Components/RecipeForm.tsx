@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import instance from '../axios/axios';
+import Tiptap from './newEditor';
 
 // TODO:
 // 4. Style form - Mostly Finished
@@ -116,11 +117,8 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 						name="title"
 						onChange={handleChange}
 					/>
-					<textarea
-						placeholder="Instructions"
-						name="instructions"
-						onChange={handleChange}
-					/>
+
+					<Tiptap />
 					<textarea
 						placeholder="Notes"
 						name="notes"
