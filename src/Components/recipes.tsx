@@ -4,7 +4,7 @@ import ShownRecipe from './shownRecipe';
 
 import { Recipe } from '../types';
 import RecipeCard from './recipeCard';
-import Search from './serach';
+import Search from './search';
 
 interface Props {
 	show?: string;
@@ -84,6 +84,9 @@ const Recipes = (props: Props) => {
 		try {
 			const response = await instance.get(`${url}${value}`);
 			let data = response.data.data;
+			setTotalRecipes(response.data.total);
+			setTotalPages(response.data.pages);
+			setCurrentPage(1);
 			setRecipes(data);
 		} catch (error) {
 			console.log(error);
