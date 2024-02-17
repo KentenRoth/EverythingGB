@@ -29,8 +29,12 @@ const Recipes = (props: Props) => {
 
 	useEffect(() => {
 		let getRecipes = async () => {
+			let url = '/recipes';
+			if (props.show === 'bookmarks') {
+				url = '/users/me/bookmarks';
+			}
 			try {
-				const response = await instance.get('/recipes');
+				const response = await instance.get(`${url}`);
 				setTotalRecipes(response.data.total);
 				setTotalPages(response.data.pages);
 				setRecipes(response.data.data);
@@ -50,24 +54,7 @@ const Recipes = (props: Props) => {
 			}
 		};
 
-		let getBookmarks = async () => {
-			try {
-				const response = await instance.get('/users/me/bookmarks');
-				setTotalRecipes(response.data.total);
-				setTotalPages(response.data.pages);
-				setRecipes(response.data.data);
-				setShownRecipe(response.data.data[0]);
-				setCurrentPage(1);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
-		if (props.show === 'bookmarks') {
-			getBookmarks();
-		} else {
-			getRecipes();
-		}
+		getRecipes();
 		getBookmarksIds();
 	}, [props.show]);
 
