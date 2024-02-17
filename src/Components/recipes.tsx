@@ -23,13 +23,19 @@ const Recipes = (props: Props) => {
 		ingredientsSetTwo: [''],
 		user: { id: '', name: '', role: '', bookmarks: [''] },
 	});
+	const [totalRecipes, setTotalRecipes] = useState<number>();
+	const [totalPages, setTotalPages] = useState<number>();
+	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
 		let getRecipes = async () => {
 			try {
 				const response = await instance.get('/recipes');
+				setTotalRecipes(response.data.total);
+				setTotalPages(response.data.pages);
 				setRecipes(response.data.data);
 				setShownRecipe(response.data.data[0]);
+				setCurrentPage(1);
 			} catch (error) {
 				console.log(error);
 			}
@@ -47,8 +53,11 @@ const Recipes = (props: Props) => {
 		let getBookmarks = async () => {
 			try {
 				const response = await instance.get('/users/me/bookmarks');
-				setRecipes(response.data);
-				setShownRecipe(response.data[0]);
+				setTotalRecipes(response.data.total);
+				setTotalPages(response.data.pages);
+				setRecipes(response.data.data);
+				setShownRecipe(response.data.data[0]);
+				setCurrentPage(1);
 			} catch (error) {
 				console.error(error);
 			}
@@ -63,7 +72,6 @@ const Recipes = (props: Props) => {
 	}, [props.show]);
 
 	let handleRecipeClick = (id: string) => {
-		console.log('Recipe clicked');
 		let newRecipe = recipes.find((recipe) => recipe._id === id);
 		setShownRecipe(newRecipe!);
 	};
@@ -72,7 +80,6 @@ const Recipes = (props: Props) => {
 		event.stopPropagation();
 		let newBookmarks: string[] = [''];
 		if (bookmarksIds.includes(id)) {
-			console.log('Removing bookmark');
 			newBookmarks = bookmarksIds.filter((bookmark) => bookmark !== id);
 		} else {
 			newBookmarks = [...bookmarksIds, id];
@@ -90,9 +97,6 @@ const Recipes = (props: Props) => {
 		try {
 			const response = await instance.get(`${url}${value}`);
 			let data = response.data.data;
-			if (props.show === 'bookmarks') {
-				data = response.data;
-			}
 			setRecipes(data);
 		} catch (error) {
 			console.log(error);
@@ -104,6 +108,21 @@ const Recipes = (props: Props) => {
 			await instance.patch('/users/me', {
 				bookmarks: newBookmarks,
 			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	let getMoreRecipes = async () => {
+		let url = '/recipes?page=';
+		if (props.show === 'bookmarks') {
+			url = '/users/me/bookmarks?page=';
+		}
+		try {
+			const response = await instance.get(`${url}${currentPage + 1}`);
+			let data = response.data.data;
+			setRecipes([...recipes, ...data]);
+			setCurrentPage(currentPage + 1);
 		} catch (error) {
 			console.log(error);
 		}
@@ -125,6 +144,18 @@ const Recipes = (props: Props) => {
 							key={recipe._id}
 						/>
 					))}
+					<div className="load-more_wrapper">
+						<button
+							className="load-more"
+							onClick={getMoreRecipes}
+							disabled={currentPage === totalPages}
+						>
+							Load more
+						</button>
+						<p className="load-more_totals">
+							Showing {recipes.length} of {totalRecipes} recipes
+						</p>
+					</div>
 				</div>
 				<div className="shown-recipe_wrapper">
 					<ShownRecipe recipe={shownRecipe} />
