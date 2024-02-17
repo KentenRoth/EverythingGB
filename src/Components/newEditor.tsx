@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,15 +6,11 @@ import {
 	faBold,
 	faItalic,
 	faStrikethrough,
-	faEraser,
 	faListUl,
 	faListOl,
 	faQuoteRight,
 	faUndo,
 	faRedo,
-	faImage,
-	faCircle,
-	faFont,
 } from '@fortawesome/free-solid-svg-icons';
 
 const MenuBar = ({ editor }) => {
@@ -28,7 +24,6 @@ const MenuBar = ({ editor }) => {
 			case value === 'paragraph':
 				editor.chain().focus().setParagraph().run();
 				break;
-			// If our selected value is a number, assume it's a h1 - h6 heading.
 			case !isNaN(value):
 				editor
 					.chain()
@@ -139,22 +134,19 @@ const MenuBar = ({ editor }) => {
 };
 
 export default (props) => {
-	if (props.content === '<p>') {
-		return null;
-	}
 	const editor = useEditor({
 		extensions: [StarterKit],
 		content: props.content,
-		onBlur({ editor, event }) {
+		onBlur({ editor }) {
 			props.getContent(editor.getHTML());
 		},
 	});
 
-	const [showModal, setShowModal] = useState(false);
-
-	const handleToggleModal = () => {
-		setShowModal(!showModal);
-	};
+	React.useEffect(() => {
+		if (editor) {
+			editor.commands.setContent(props.content);
+		}
+	}, [props.content, editor]);
 
 	return (
 		<div className={'editorBox'}>

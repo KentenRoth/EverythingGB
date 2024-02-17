@@ -25,7 +25,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		description: '',
 		ingredients: [''],
 		ingredientsSetTwo: [''],
-		instructions: '',
+		instructions: '<p>Instructions</p>',
 		category: '',
 		notes: '',
 	});
@@ -42,7 +42,18 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		instance
 			.post('/recipes', recipe)
 			.then((response) => {
-				console.log(response);
+				if (response.status === 201) {
+					setRecipe({
+						title: '',
+						description: '',
+						ingredients: [''],
+						ingredientsSetTwo: [''],
+						instructions: '<p>Instructions</p>',
+						category: '',
+						notes: '',
+					});
+					setHasIngredientsSetTwo(false);
+				}
 			})
 			.catch((error) => {
 				console.log(error);
@@ -119,19 +130,25 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 						type="text"
 						placeholder="Title"
 						name="title"
+						value={recipe.title}
 						onChange={handleChange}
 					/>
 
-					<Tiptap getContent={editorContent} />
+					<Tiptap
+						getContent={editorContent}
+						content={recipe.instructions}
+					/>
 					<textarea
 						placeholder="Notes"
 						name="notes"
+						value={recipe.notes}
 						onChange={handleChange}
 					/>
 					<input
 						type="text"
 						placeholder="Categories seperated by commas"
 						name="category"
+						value={recipe.category}
 						onChange={handleChange}
 					/>
 					<button type="submit">Save</button>
