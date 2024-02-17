@@ -7,3 +7,28 @@
     overflow: scroll
     .shown-recipe
         padding: 25px
+        width: 100%
+        h1, h2
+            font-family: $heading
+            padding: 0
+        h2
+            text-decoration: underline
+            padding-bottom: 10px
+        ul, p
+            color: $light-gray
+        .ingredients
+            padding-top: 25px
+            display: flex
+            gap: 30px
+            flex-wrap: wrap
+            .set-one, set-two
+                flex-basis: 45%
+        .instructions
+            color: $light-gray
+            padding-top: 50px
+            div
+                padding-left: 15px
+        .notes, .categories
+            padding-top: 50px
+            p
+                padding-left: 15px
