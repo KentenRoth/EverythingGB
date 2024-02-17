@@ -107,6 +107,10 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		}));
 	};
 
+	const editorContent = (content: string) => {
+		setRecipe({ ...recipe, instructions: content });
+	};
+
 	return (
 		<>
 			<form className="recipe_form" onSubmit={handleSubmit}>
@@ -118,7 +122,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 						onChange={handleChange}
 					/>
 
-					<Tiptap />
+					<Tiptap getContent={editorContent} />
 					<textarea
 						placeholder="Notes"
 						name="notes"
