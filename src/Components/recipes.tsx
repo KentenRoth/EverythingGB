@@ -138,7 +138,9 @@ const Recipes = (props: Props) => {
 						<button
 							className="load-more"
 							onClick={getMoreRecipes}
-							disabled={currentPage === totalPages}
+							disabled={
+								currentPage === totalPages || totalRecipes === 0
+							}
 						>
 							Load more
 						</button>
