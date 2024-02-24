@@ -1,5 +1,5 @@
 import './sass/app.sass';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import instance from './axios/axios';
 
@@ -12,6 +12,7 @@ import Main from './Pages/main';
 
 const AuthCheck = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const isTokenValid = async () => {
@@ -22,12 +23,12 @@ const AuthCheck = () => {
 					}
 				});
 			} catch (error) {
-				console.log(error);
+				navigate('/login');
 			}
 		};
 
 		isTokenValid();
-	}, []);
+	}, [navigate]);
 
 	return isLoggedIn ? <Main /> : <Login />;
 };
