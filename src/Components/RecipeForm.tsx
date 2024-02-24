@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import instance from '../axios/axios';
 import Tiptap from './newEditor';
 
-// TODO:
-// 4. Style form - Mostly Finished
-// 5. Maybe make instructions a wysiwyg
-
 interface Recipe {
 	title: string;
 	description: string;
@@ -39,8 +35,21 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const filteredIngredients = recipe.ingredients.filter(
+			(ingredient) => ingredient !== ''
+		);
+		const filteredIngredientsSetTwo = recipe.ingredientsSetTwo.filter(
+			(ingredient) => ingredient !== ''
+		);
+
+		const newRecipe = {
+			...recipe,
+			ingredients: filteredIngredients,
+			ingredientsSetTwo: filteredIngredientsSetTwo,
+		};
 		instance
-			.post('/recipes', recipe)
+			.post('/recipes', newRecipe)
 			.then((response) => {
 				if (response.status === 201) {
 					setRecipe({

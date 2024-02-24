@@ -8,8 +8,6 @@ import SignUp from './Pages/signup';
 import Login from './Pages/login';
 import Main from './Pages/main';
 
-// TODO: Browser Router and Routes
-
 const AuthCheck = () => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const navigate = useNavigate();
