@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Tabs from '../Components/tabs';
 import Create from './create';
 import Recipes from '../Components/recipes';
+import Settings from '../Components/settings';
 
 const Main = () => {
 	const [tabs, setTabs] = useState([
@@ -56,6 +57,9 @@ const Main = () => {
 				return <Create />;
 			case 'bookmark':
 				return <Recipes show={'bookmarks'} />;
+
+			case 'settings':
+				return <Settings />;
 			default:
 				return <Recipes />;
 		}
