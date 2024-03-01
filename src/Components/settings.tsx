@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import instance from '../axios/axios';
+import { useNavigate } from 'react-router-dom';
 
 interface Updates {
 	email: string;
@@ -15,6 +16,7 @@ const Settings = () => {
 		confirmPassword: '',
 		currentPassword: '',
 	});
+	const navigate = useNavigate();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -27,7 +29,7 @@ const Settings = () => {
 		try {
 			const response = await instance.post(`/users/${url}`);
 			if (response.status === 200) {
-				console.log('Logged out');
+				navigate('/login');
 			}
 		} catch (error) {
 			console.log(error);
