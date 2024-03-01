@@ -162,92 +162,94 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 					/>
 					<button type="submit">Save</button>
 				</div>
-				<div className="recipe_form__ingredients">
-					{recipe.ingredients.map((ingredient, index) => (
-						<React.Fragment key={index}>
-							<div className="ingredient_wrapper">
-								<input
-									type="text"
-									placeholder={`Ingredient ${index + 1}`}
-									name={`ingredient${index}`}
-									value={ingredient || ''}
-									onChange={(event) =>
-										handleIngredientChange(index, event)
-									}
-								/>
-								<button
-									className="ingredients_delete"
-									onClick={() => removeIngredient(index)}
-								>
-									-
-								</button>
-							</div>
-						</React.Fragment>
-					))}
-					<div className="button_wrapper">
-						<button type="button" onClick={addMoreIngredients}>
-							Add More Ingredients
-						</button>
-						{!hasIngredientsSetTwo && (
-							<button
-								type="button"
-								onClick={addIngredientsSetTwo}
-							>
-								Add Second Ingredient Set
+				<div className="recipe_form__ingredients_wrapper">
+					<div className="recipe_form__ingredients">
+						{recipe.ingredients.map((ingredient, index) => (
+							<React.Fragment key={index}>
+								<div className="ingredient_wrapper">
+									<input
+										type="text"
+										placeholder={`Ingredient ${index + 1}`}
+										name={`ingredient${index}`}
+										value={ingredient || ''}
+										onChange={(event) =>
+											handleIngredientChange(index, event)
+										}
+									/>
+									<button
+										className="ingredients_delete"
+										onClick={() => removeIngredient(index)}
+									>
+										-
+									</button>
+								</div>
+							</React.Fragment>
+						))}
+						<div className="button_wrapper">
+							<button type="button" onClick={addMoreIngredients}>
+								Add More Ingredients
 							</button>
-						)}
-					</div>
-					{hasIngredientsSetTwo && (
-						<div className="recipe_form__ingredients-two">
-							<h3>Ingredient Set Two</h3>
-							{recipe.ingredientsSetTwo?.map(
-								(ingredient, index) => (
-									<React.Fragment key={index}>
-										<div className="ingredient_wrapper">
-											<input
-												type="text"
-												placeholder={`Ingredient ${
-													index + 1
-												}`}
-												name={`ingredient${index}`}
-												value={ingredient || ''}
-												onChange={(event) =>
-													handleIngredientChangeSetTwo(
-														index,
-														event
-													)
-												}
-											/>
-											<button
-												className="ingredients_delete"
-												onClick={() =>
-													removeIngredientsSetTwo(
-														index
-													)
-												}
-											>
-												-
-											</button>
-										</div>
-									</React.Fragment>
-								)
-							)}
-							<div className="button_wrapper">
-								<button
-									type="button"
-									onClick={addMoreIngredientsSetTwo}
-								>
-									Add More Ingredients
-								</button>
+							{!hasIngredientsSetTwo && (
 								<button
 									type="button"
 									onClick={addIngredientsSetTwo}
 								>
-									Remove Ingredient Set
+									Add Second Ingredient Set
 								</button>
-							</div>
+							)}
 						</div>
-					)}
+						{hasIngredientsSetTwo && (
+							<div className="recipe_form__ingredients-two">
+								<h3>Ingredient Set Two</h3>
+								{recipe.ingredientsSetTwo?.map(
+									(ingredient, index) => (
+										<React.Fragment key={index}>
+											<div className="ingredient_wrapper">
+												<input
+													type="text"
+													placeholder={`Ingredient ${
+														index + 1
+													}`}
+													name={`ingredient${index}`}
+													value={ingredient || ''}
+													onChange={(event) =>
+														handleIngredientChangeSetTwo(
+															index,
+															event
+														)
+													}
+												/>
+												<button
+													className="ingredients_delete"
+													onClick={() =>
+														removeIngredientsSetTwo(
+															index
+														)
+													}
+												>
+													-
+												</button>
+											</div>
+										</React.Fragment>
+									)
+								)}
+								<div className="button_wrapper">
+									<button
+										type="button"
+										onClick={addMoreIngredientsSetTwo}
+									>
+										Add More Ingredients
+									</button>
+									<button
+										type="button"
+										onClick={addIngredientsSetTwo}
+									>
+										Remove Ingredient Set
+									</button>
+								</div>
+							</div>
+						)}
+					</div>
 				</div>
 			</form>
 		</>
