@@ -7,6 +7,7 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [rememberMe, setRememberMe] = useState(false);
+	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
 	const login = async (e: React.FormEvent) => {
@@ -24,6 +25,7 @@ const Login = () => {
 				navigate('/');
 			}
 		} catch (error) {
+			setError('Failed to log in. Please check your email and password.');
 			console.error(error);
 		}
 	};
@@ -32,6 +34,7 @@ const Login = () => {
 		<div className="login">
 			<div className="login_container">
 				<h1>Login</h1>
+				{error && <p className="error">{error}</p>}
 				<form className="login-form" onSubmit={login}>
 					<input
 						type="text"
