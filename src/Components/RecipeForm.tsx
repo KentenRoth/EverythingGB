@@ -26,6 +26,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 		notes: '',
 	});
 	let [hasIngredientsSetTwo, setHasIngredientsSetTwo] = useState(false);
+	let [error, setError] = useState<string | null>(null);
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,9 +63,11 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 						notes: '',
 					});
 					setHasIngredientsSetTwo(false);
+					setError(null);
 				}
 			})
 			.catch((error) => {
+				setError('An error occurred while saving the recipe.');
 				console.log(error);
 			});
 	};
@@ -133,6 +136,7 @@ const RecipeForm: React.FC<RecipeFormProps> = () => {
 
 	return (
 		<>
+			{error && <p className="error">{error}</p>}
 			<form className="recipe_form" onSubmit={handleSubmit}>
 				<div className="recipe_form__main">
 					<input
