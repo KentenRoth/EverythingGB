@@ -1,10 +1,13 @@
 import { Recipe } from '../types';
 
 type ShownRecipeProps = {
-	recipe: Recipe;
+	recipe: Recipe | null;
 };
 
 const ShownRecipe = (props: ShownRecipeProps) => {
+	if (!props.recipe) {
+		return null;
+	}
 	return (
 		<>
 			<div className="shown-recipe">

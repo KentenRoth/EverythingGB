@@ -125,15 +125,19 @@ const Recipes = (props: Props) => {
 					<div className="search_wrapper">
 						<Search search={handleSearch} />
 					</div>
-					{recipes.map((recipe) => (
-						<RecipeCard
-							recipe={recipe}
-							show={handleRecipeClick}
-							onBookmarkClick={handleBookmarkClick}
-							bookmark={bookmarksIds.includes(recipe._id)}
-							key={recipe._id}
-						/>
-					))}
+					{recipes.length > 0 ? (
+						recipes.map((recipe) => (
+							<RecipeCard
+								recipe={recipe}
+								show={handleRecipeClick}
+								onBookmarkClick={handleBookmarkClick}
+								bookmark={bookmarksIds.includes(recipe._id)}
+								key={recipe._id}
+							/>
+						))
+					) : (
+						<p>No recipes found.</p>
+					)}
 					<div className="load-more_wrapper">
 						<button
 							className="load-more"
