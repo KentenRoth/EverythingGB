@@ -6,10 +6,17 @@ import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
 	const [name, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
 	const signUp = async () => {
+		if (password !== confirmPassword) {
+			setError('Passwords do not match.');
+			return;
+		}
+
 		try {
 			const response = await instance.post('/users', {
 				name: name,
@@ -21,6 +28,7 @@ const SignUp = () => {
 				navigate('/');
 			}
 		} catch (error) {
+			setError('Failed to sign up. Please check your input.');
 			console.error(error);
 		}
 	};
@@ -29,6 +37,7 @@ const SignUp = () => {
 		<div className="signup">
 			<div className="signup_container">
 				<h1>Sign Up</h1>
+				{error && <p className="error">{error}</p>}
 				<input
 					type="text"
 					placeholder="Name"
@@ -43,6 +52,11 @@ const SignUp = () => {
 					type="password"
 					placeholder="Password"
 					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<input
+					type="password"
+					placeholder="Confirm Password"
+					onChange={(e) => setConfirmPassword(e.target.value)}
 				/>
 				<button onClick={signUp}>Sign Up</button>
 			</div>
