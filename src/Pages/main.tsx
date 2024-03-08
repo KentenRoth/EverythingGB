@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import instance from '../axios/axios';
 import Tabs from '../Components/tabs';
 import Create from './create';
 import Recipes from '../Components/recipes';
 import Settings from '../Components/settings';
 
 const Main = () => {
+	const [userRole, setUserRole] = useState('user');
 	const [tabs, setTabs] = useState([
 		{
 			title: 'Recipes',
@@ -38,6 +40,18 @@ const Main = () => {
 		},
 	]);
 
+	useEffect(() => {
+		let getRole = async () => {
+			try {
+				const response = await instance.get('/users/me');
+				setUserRole(response.data.role);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		getRole();
+	});
+
 	let handleTabClick = (id: string) => {
 		let newTabs = tabs.map((tab) => {
 			if (tab.id === id) {
@@ -67,7 +81,16 @@ const Main = () => {
 
 	return (
 		<>
-			<Tabs tabs={tabs} handleTabClick={handleTabClick} />
+			<Tabs
+				tabs={tabs.filter(
+					(tab) =>
+						!(
+							tab.isPrivate &&
+							!['admin', 'grandma'].includes(userRole)
+						)
+				)}
+				handleTabClick={handleTabClick}
+			/>
 			{activeTabContent()}
 		</>
 	);
