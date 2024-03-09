@@ -27,12 +27,6 @@ const Main = () => {
 			id: 'settings',
 		},
 		{
-			title: 'Admin',
-			isActive: false,
-			isPrivate: true,
-			id: 'admin',
-		},
-		{
 			title: 'Create',
 			isActive: false,
 			isPrivate: true,
