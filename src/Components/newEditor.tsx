@@ -13,18 +13,17 @@ import {
 	faRedo,
 } from '@fortawesome/free-solid-svg-icons';
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor }: { editor: any }) => {
 	if (!editor) {
 		return null;
 	}
 
-	function handleHeadingSelect(value, editor) {
+	function handleHeadingSelect(value: string, editor: any) {
 		switch (true) {
-			// Handle paragraphs
 			case value === 'paragraph':
 				editor.chain().focus().setParagraph().run();
 				break;
-			case !isNaN(value):
+			case !isNaN(Number(value)):
 				editor
 					.chain()
 					.focus()
@@ -133,7 +132,7 @@ const MenuBar = ({ editor }) => {
 	);
 };
 
-export default (props) => {
+export default (props: any) => {
 	const editor = useEditor({
 		extensions: [StarterKit],
 		content: props.content,

@@ -1,4 +1,4 @@
-import RecipeForm from '../Components/RecipeForm';
+import RecipeForm from '../Components/recipeForm';
 
 const Create = () => {
 	return (
