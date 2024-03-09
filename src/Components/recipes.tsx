@@ -26,6 +26,7 @@ const Recipes = (props: Props) => {
 	const [totalRecipes, setTotalRecipes] = useState<number>();
 	const [totalPages, setTotalPages] = useState<number>();
 	const [currentPage, setCurrentPage] = useState(1);
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		let getRecipes = async () => {
@@ -61,6 +62,7 @@ const Recipes = (props: Props) => {
 	let handleRecipeClick = (id: string) => {
 		let newRecipe = recipes.find((recipe) => recipe._id === id);
 		setShownRecipe(newRecipe!);
+		setShowModal(true);
 	};
 
 	let handleBookmarkClick = (event: React.MouseEvent, id: string) => {
@@ -118,43 +120,55 @@ const Recipes = (props: Props) => {
 		}
 	};
 
+	let hideModal = () => {
+		setShowModal(false);
+	};
+
 	return (
 		<>
 			<div className="recipes_wrapper">
-				<div className="recipes">
-					<div className="search_wrapper">
-						<Search search={handleSearch} />
+				<div className="recipes_container">
+					<div className="recipes">
+						<div className="search_wrapper">
+							<Search search={handleSearch} />
+						</div>
+						{recipes.length > 0 ? (
+							recipes.map((recipe) => (
+								<RecipeCard
+									recipe={recipe}
+									show={handleRecipeClick}
+									onBookmarkClick={handleBookmarkClick}
+									bookmark={bookmarksIds.includes(recipe._id)}
+									key={recipe._id}
+								/>
+							))
+						) : (
+							<p>No recipes found.</p>
+						)}
+						<div className="load-more_wrapper">
+							<button
+								className="load-more"
+								onClick={getMoreRecipes}
+								disabled={
+									currentPage === totalPages ||
+									totalRecipes === 0
+								}
+							>
+								Load more
+							</button>
+							<p className="load-more_totals">
+								Showing {recipes.length} of {totalRecipes}{' '}
+								recipes
+							</p>
+						</div>
 					</div>
-					{recipes.length > 0 ? (
-						recipes.map((recipe) => (
-							<RecipeCard
-								recipe={recipe}
-								show={handleRecipeClick}
-								onBookmarkClick={handleBookmarkClick}
-								bookmark={bookmarksIds.includes(recipe._id)}
-								key={recipe._id}
-							/>
-						))
-					) : (
-						<p>No recipes found.</p>
-					)}
-					<div className="load-more_wrapper">
-						<button
-							className="load-more"
-							onClick={getMoreRecipes}
-							disabled={
-								currentPage === totalPages || totalRecipes === 0
-							}
-						>
-							Load more
-						</button>
-						<p className="load-more_totals">
-							Showing {recipes.length} of {totalRecipes} recipes
-						</p>
+					<div
+						className={`shown-recipe_wrapper ${
+							showModal ? 'mobile-show-recipe' : ''
+						}`}
+					>
+						<ShownRecipe recipe={shownRecipe} hide={hideModal} />
 					</div>
-				</div>
-				<div className="shown-recipe_wrapper">
-					<ShownRecipe recipe={shownRecipe} />
 				</div>
 			</div>
 		</>

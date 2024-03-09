@@ -4,10 +4,18 @@
     flex-basis: 50%
     border: solid 2px $accent-blue
     background: $dark-gray
+    z-index: 5
+    transition: 300ms ease-in-out
+    @media (max-width: 900px)
+        position: absolute
+        flex-basis: 100%
+        width: 100%
+        right: -110%
     .shown-recipe
         padding: 25px
         width: 100%
         overflow: scroll
+        position: relative
         h1, h2
             font-family: $heading
             padding: 0
@@ -16,6 +24,22 @@
             padding-bottom: 10px
         ul, p
             color: $light-gray
+        .hide-show-recipe
+            margin-top: 6px
+            justify-content: center
+            align-items: center
+            font-size: 30px
+            color: $light-gray
+            position: absolute
+            height: 30px
+            width: 35px
+            right: 20px
+            display: none
+            cursor: pointer
+            @media (max-width: 900px)
+                display: flex
+        .title
+            padding-right: 35px
         .ingredients
             padding-top: 25px
             display: flex
@@ -32,3 +56,6 @@
             padding-top: 50px
             p
                 padding-left: 15px
+.mobile-show-recipe
+    right: 0%
+    transition: 300ms ease-in-out

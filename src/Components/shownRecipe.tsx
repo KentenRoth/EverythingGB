@@ -2,6 +2,7 @@ import { Recipe } from '../types';
 
 type ShownRecipeProps = {
 	recipe: Recipe | null;
+	hide: () => void;
 };
 
 const ShownRecipe = (props: ShownRecipeProps) => {
@@ -11,6 +12,9 @@ const ShownRecipe = (props: ShownRecipeProps) => {
 	return (
 		<>
 			<div className="shown-recipe">
+				<div className="hide-show-recipe" onClick={props.hide}>
+					&rarr;
+				</div>
 				<div className="title">
 					<h1>{props.recipe.title}</h1>
 				</div>

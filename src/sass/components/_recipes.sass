@@ -7,42 +7,44 @@
     align-items: center
     margin: auto
     padding: 10px
-    overflow-y: auto
-    flex-wrap: wrap
-    .recipes
+    .recipes_container
+        height: 800px
         position: relative
         display: flex
-        flex-direction: column
-        flex-basis: 40%
-        gap: 25px
-        height: 800px
-        overflow-y: scroll
-        padding-right: 20px
-        .search_wrapper
-            form
-                width: 100%
-                gap: 25px
-                display: flex
-                justify-content: center
-                align-items: center
-                input
-                    margin: 0
+        justify-content: center
+        width: 100%
+        .recipes
+            display: flex
+            flex-direction: column
+            flex-basis: 45%
+            gap: 25px
+            height: 800px
+            overflow-y: scroll
+            padding-right: 20px
+            @media (max-width: 900px)
+                flex-basis: 100%
+            .search_wrapper
+                form
                     width: 100%
+                    gap: 25px
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    input
+                        margin: 0
+                        width: 100%
+                    button
+                        margin: 0
+
+            .load-more_wrapper
+                display: flex
+                justify-content: space-between
+                align-items: center
+                gap: 20px
                 button
                     margin: 0
-
-        .load-more_wrapper
-            display: flex
-            justify-content: space-between
-            align-items: center
-            gap: 20px
-            button
-                margin: 0
-                &:disabled
-                    pointer-events: none
-                    opacity: .5
-            .load-more_totals
-                color: $light-gray
-
-
-
+                    &:disabled
+                        pointer-events: none
+                        opacity: .5
+                .load-more_totals
+                    color: $light-gray
