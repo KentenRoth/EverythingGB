@@ -31,38 +31,45 @@ const Login = () => {
 	};
 
 	return (
-		<div className="login">
-			<div className="login_container">
-				<h1>Login</h1>
-				{error && <p className="error">{error}</p>}
-				<form className="login-form" onSubmit={login}>
-					<input
-						type="text"
-						placeholder="Email"
-						onChange={(e) => setEmail(e.target.value)}
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-					<button onClick={login}>Login</button>
-					<div className="checkbox">
+		<div className="login-wrapper">
+			<div className="login">
+				<div className="login_container">
+					<h1>Login</h1>
+					{error && <p className="error">{error}</p>}
+					<form className="login-form" onSubmit={login}>
 						<input
-							type="checkbox"
-							id="remember"
-							checked={rememberMe}
-							onChange={(e) => setRememberMe(e.target.checked)}
-						/>{' '}
-						<label className="checkbox-label" htmlFor="remember">
-							Remember me?
-						</label>
+							type="text"
+							placeholder="Email"
+							onChange={(e) => setEmail(e.target.value)}
+						/>
+						<input
+							type="password"
+							placeholder="Password"
+							onChange={(e) => setPassword(e.target.value)}
+						/>
+						<button onClick={login}>Login</button>
+						<div className="checkbox">
+							<input
+								type="checkbox"
+								id="remember"
+								checked={rememberMe}
+								onChange={(e) =>
+									setRememberMe(e.target.checked)
+								}
+							/>{' '}
+							<label
+								className="checkbox-label"
+								htmlFor="remember"
+							>
+								Remember me?
+							</label>
+						</div>
+					</form>
+					<div className="no-account">
+						<p>
+							Don't have an account? <a href="/signup">Sign Up</a>
+						</p>
 					</div>
-				</form>
-				<div className="no-account">
-					<p>
-						Don't have an account? <a href="/signup">Sign Up</a>
-					</p>
 				</div>
 			</div>
 		</div>

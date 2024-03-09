@@ -34,31 +34,33 @@ const SignUp = () => {
 	};
 
 	return (
-		<div className="signup">
-			<div className="signup_container">
-				<h1>Sign Up</h1>
-				{error && <p className="error">{error}</p>}
-				<input
-					type="text"
-					placeholder="Name"
-					onChange={(e) => setUsername(e.target.value)}
-				/>
-				<input
-					type="text"
-					placeholder="Email"
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-				<input
-					type="password"
-					placeholder="Password"
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<input
-					type="password"
-					placeholder="Confirm Password"
-					onChange={(e) => setConfirmPassword(e.target.value)}
-				/>
-				<button onClick={signUp}>Sign Up</button>
+		<div className="signup-wrapper">
+			<div className="signup">
+				<div className="signup_container">
+					<h1>Sign Up</h1>
+					{error && <p className="error">{error}</p>}
+					<input
+						type="text"
+						placeholder="Name"
+						onChange={(e) => setUsername(e.target.value)}
+					/>
+					<input
+						type="text"
+						placeholder="Email"
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+					<input
+						type="password"
+						placeholder="Password"
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+					<input
+						type="password"
+						placeholder="Confirm Password"
+						onChange={(e) => setConfirmPassword(e.target.value)}
+					/>
+					<button onClick={signUp}>Sign Up</button>
+				</div>
 			</div>
 		</div>
 	);
