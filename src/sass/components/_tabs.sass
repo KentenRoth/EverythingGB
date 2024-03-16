@@ -1,50 +1,129 @@
 .tabs
-    position: absolute
-    top: 0
-    left: 0
-    display: flex
+    position: fixed
     width: 100%
     background: $mid-gray
     padding: 20px
-    justify-content: center
-    align-items: center
     gap: 30px
-    .tab
-        background: $light-gray
-        text-decoration: none
-        position: relative
-        padding: 10px 25px
-        cursor: pointer
-        &::after
-            content: ''
-            transition: 300ms ease-in-out
-            width: 100%
-            height: 10px
-            background: $accent-blue
-            position: absolute
-            bottom: 0
-            left: 0
-            opacity: 0
-        p
-            font-family: $title
-            transition: 300ms ease-in-out
-            color: $dark-gray
+    display: flex
+    .desktop
+        display: flex
+        width: 100%
+        justify-content: center
+        align-items: center
+        gap: 30px
+        .tab
+            background: $light-gray
+            text-decoration: none
             position: relative
-            z-index: 2
-        &:hover
-            transition: 300ms ease-in-out
+            padding: 10px 25px
+            cursor: pointer
+            &::after
+                content: ''
+                transition: 300ms ease-in-out
+                width: 100%
+                height: 10px
+                background: $accent-blue
+                position: absolute
+                bottom: 0
+                left: 0
+                opacity: 0
+            p
+                font-family: $title
+                transition: 300ms ease-in-out
+                color: $dark-gray
+                position: relative
+                z-index: 2
+            &:hover
+                transition: 300ms ease-in-out
+                &::after
+                    opacity: 1
+                    height: 100%
+                p
+                    transition: 300ms ease-in-out
+                    color: white
+        .active
             &::after
                 opacity: 1
                 height: 100%
             p
-                transition: 300ms ease-in-out
                 color: white
-    .active
-        &::after
-            opacity: 1
-            height: 100%
-        p
-            color: white
 
-    @media (max-width: 900px)
+    .mobile-tabs_links
+        position: absolute
+        left: 0
+        top: -100%
+        display: none
+        gap: 20px
+        padding: 60px 10px 10px 10px
+        flex-direction: column
+        width: 100%
+        background: $box-shadow-blue
+        backdrop-filter: blur(1rem)
+        transition: 400ms ease-in-out
+        a
+            width: fit-content
+            padding: 10px 20px
+            text-decoration: none
+            font-size: 18px
+            color: white
+            transition: 300ms ease-in-out
+            font-weight: bold
+            cursor: pointer
+            &:hover
+                transition: 300ms ease-in-out
+                background: $accent-blue
+                color: $dark-gray
+        .active
+            background: $accent-blue
+            color: $dark-gray
+    &-toggle
+        display: none
+        justify-content: space-between
+        align-items: center
+        padding: 5px 20px
+        z-index: 6
+        .hamburger
+            display: flex
+            flex-direction: column
+            cursor: pointer
+            .bar1,
+            .bar2,
+            .bar3
+                width: 35px
+                height: 2px
+                background-color: $accent-blue
+                margin: 5px 0
+                transition: 0.4s
+                z-index: 3
+
+    .hamburger.open .bar1
+        transform: rotate(-45deg) translate(-9px, 8px)
+
+    .hamburger.open .bar2
+        transform: rotate(45deg) translate(-1px, 0)
+
+    .hamburger.open .bar3
+        opacity: 0
+
+    .mobile-tabs_links.open
+        top: 0
+        transition: 400ms ease-in-out
+        z-index: 5
+        height: 100%
+
+@media (max-width: 900px)
+    .tabs
         position: unset
+
+@media (max-width: 800px)
+    .tabs
+        justify-content: flex-end
+        &-toggle
+            display: block
+        .desktop
+            display: none
+        .mobile
+            display: flex
+        .mobile-tabs_links
+            display: inline-flex
+
